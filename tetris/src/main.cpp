@@ -1,35 +1,40 @@
+#include <vulkan/vulkan.h>
+
 #include <iostream>
-#include <GLFW/glfw3.h>
-#include <glm/glm.hpp>
+#include <stdexcept>
+#include <cstdlib>
+
+class HelloTriangleApplication {
+public:
+    void run() {
+        initVulkan();
+        mainLoop();
+        cleanup();
+    }
+
+private:
+    void initVulkan() {
+
+    }
+
+    void mainLoop() {
+
+    }
+
+    void cleanup() {
+
+    }
+};
 
 int main() {
-    // Initialize GLFW
-    if (!glfwInit()) {
-        std::cerr << "Failed to initialize GLFW" << std::endl;
-        return -1;
+    HelloTriangleApplication app;
+
+    try {
+        app.run();
+    } catch (const std::exception& e) {
+        std::cerr << e.what() << std::endl;
+        return EXIT_FAILURE;
     }
 
-    // Create a windowed mode window and its OpenGL context
-    GLFWwindow* window = glfwCreateWindow(640, 480, "GLFW Test", NULL, NULL);
-    if (!window) {
-        std::cerr << "Failed to create GLFW window" << std::endl;
-        glfwTerminate();
-        return -1;
-    }
-
-    // Make the window's context current
-    glfwMakeContextCurrent(window);
-
-    // Loop until the user closes the window
-    while (!glfwWindowShouldClose(window)) {
-        // Poll for and process events
-        glfwPollEvents();
-
-        // Swap front and back buffers
-        glfwSwapBuffers(window);
-    }
-
-    // Terminate GLFW
-    glfwTerminate();
-    return 0;
+    return EXIT_SUCCESS;
 }
