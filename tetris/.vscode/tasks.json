@@ -1,0 +1,26 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "cppbuild",
+			"label": "C/C++: g++.exe build task",
+			"command": "g++",
+			"args": [
+				"-fdiagnostics-color=always",
+				"-g",
+				"${workspaceFolder}\\src\\*.cpp",
+				"${workspaceFolder}\\src\\*.hpp",
+				"-o",
+				"${workspaceFolder}\\build\\TestExecutable.exe"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}\\src"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": "build",
+			"detail": "compiler: g++"
+		}
+	]
+}
