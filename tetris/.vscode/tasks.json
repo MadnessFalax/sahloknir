@@ -11,7 +11,10 @@
 				"${workspaceFolder}\\src\\*.cpp",
 				"${workspaceFolder}\\src\\*.hpp",
 				"-o",
-				"${workspaceFolder}\\build\\TestExecutable.exe"
+				"${workspaceFolder}\\build\\TestExecutable.exe",
+				"-I${workspaceFolder}\\src\\include",
+				"-L${workspaceFolder}\\src\\lib",
+				"-lglfw3"
 			],
 			"options": {
 				"cwd": "${workspaceFolder}\\src"
