@@ -13,8 +13,11 @@
 				"-o",
 				"${workspaceFolder}\\build\\TestExecutable.exe",
 				"-I${workspaceFolder}\\src\\include",
+				"-IX:\\vulkan\\Include",
 				"-L${workspaceFolder}\\src\\lib",
-				"-lglfw3"
+				"-LX:\\vulkan\\Lib",
+				"-lglfw3",
+				"-lvulkan-1"
 			],
 			"options": {
 				"cwd": "${workspaceFolder}\\src"
