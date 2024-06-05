@@ -1,108 +1,110 @@
-#define SDL_MAIN_HADNLED
-#include "include/SDL2/SDL.h"
 #include "include/SDL2/SDL_main.h"
+#include "include/SDL2/SDL.h"
+#include "include/SDL2/SDL_image.h"
+#include <stdio.h>
+#include "App.hpp"
 
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
+// // Screen dimension constants
+// const int SCREEN_WIDTH = 800;
+// const int SCREEN_HEIGHT = 600;
+App* application = nullptr;
+void cleanup_wrapper();
 
-enum Shape { SQUARE, TRIANGLE };
-
-void drawSquare(SDL_Renderer* renderer) {
-    SDL_Rect square = {SCREEN_WIDTH / 4, SCREEN_HEIGHT / 4, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2};
-    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); // Red color
-    SDL_RenderFillRect(renderer, &square);
-}
-
-void drawTriangle(SDL_Renderer* renderer) {
-    int x1 = SCREEN_WIDTH / 2;
-    int y1 = SCREEN_HEIGHT / 4;
-    int x2 = SCREEN_WIDTH / 4;
-    int y2 = SCREEN_HEIGHT * 3 / 4;
-    int x3 = SCREEN_WIDTH * 3 / 4;
-    int y3 = SCREEN_HEIGHT * 3 / 4;
-
-    SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255); // Blue color
-    SDL_RenderDrawLine(renderer, x1, y1, x2, y2);
-    SDL_RenderDrawLine(renderer, x1, y1, x3, y3);
-    SDL_RenderDrawLine(renderer, x2, y2, x3, y3);
-}
 
 int main(int argc, char* args[]) {
-    // Initialize SDL
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-        SDL_Log("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
-        return 1;
-    }
+    atexit(cleanup_wrapper);
 
-    // Create window
-    SDL_Window* window = SDL_CreateWindow("SDL Shapes", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-    if (window == nullptr) {
-        SDL_Log("Window could not be created! SDL_Error: %s\n", SDL_GetError());
-        return 1;
-    }
+    application = new App();
+    // // Initialize SDL
+    // if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+    //     printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
+    //     return 1;
+    // }
 
-    // Create renderer for window
-    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-    if (renderer == nullptr) {
-        SDL_Log("Renderer could not be created! SDL_Error: %s\n", SDL_GetError());
-        return 1;
-    }
+    // // Initialize SDL_image
+    // int imgFlags = IMG_INIT_PNG;
+    // if (!(IMG_Init(imgFlags) & imgFlags)) {
+    //     printf("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
+    //     return 1;
+    // }
 
-    // Main loop flag
-    bool quit = false;
+    // // Create window
+    // SDL_Window* window = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+    // if (window == NULL) {
+    //     printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
+    //     return 1;
+    // }
 
-    // Current shape
-    Shape currentShape = SQUARE;
+    // // Create renderer for window
+    // SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    // if (renderer == NULL) {
+    //     printf("Renderer could not be created! SDL_Error: %s\n", SDL_GetError());
+    //     return 1;
+    // }
 
-    // Event handler
-    SDL_Event e;
+    // // Load PNG image
+    // SDL_Surface* loadedSurface = IMG_Load("X:\\code_repos\\sahloknir\\tetris-sdl\\build\\res\\dirt.png");
+    // if (loadedSurface == NULL) {
+    //     printf("Unable to load image %s! SDL_image Error: %s\n", "X:\\code_repos\\sahloknir\\tetris-sdl\\build\\res\\dirt.png", IMG_GetError());
+    //     return 1;
+    // }
 
-    // Main loop
-    while (!quit) {
-        // Handle events on queue
-        while (SDL_PollEvent(&e) != 0) {
-            // User requests quit
-            if (e.type == SDL_QUIT) {
-                quit = true;
-            }
-            // Handle key press events
-            else if (e.type == SDL_KEYDOWN) {
-                switch (e.key.keysym.sym) {
-                    case SDLK_s:
-                        currentShape = SQUARE;
-                        break;
-                    case SDLK_t:
-                        currentShape = TRIANGLE;
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
+    // // Create texture from surface pixels
+    // SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, loadedSurface);
+    // if (texture == NULL) {
+    //     printf("Unable to create texture from %s! SDL_Error: %s\n", "X:\\code_repos\\sahloknir\\tetris-sdl\\build\\res\\dirt.png", SDL_GetError());
+    // }
 
-        // Clear screen
-        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255); // White color
-        SDL_RenderClear(renderer);
+    // // Free loaded surface
+    // SDL_FreeSurface(loadedSurface);
 
-        // Draw current shape
-        if (currentShape == SQUARE) {
-            drawSquare(renderer);
-        } else if (currentShape == TRIANGLE) {
-            drawTriangle(renderer);
-        }
+    // // Main loop flag
+    // int quit = 0;
 
-        // Update screen
-        SDL_RenderPresent(renderer);
-    }
+    // // Event handler
+    // SDL_Event e;
 
-    // Destroy renderer
-    SDL_DestroyRenderer(renderer);
+    // // While application is running
+    // while (!quit) {
+    //     // Handle events on queue
+    //     while (SDL_PollEvent(&e) != 0) {
+    //         // User requests quit
+    //         if (e.type == SDL_QUIT) {
+    //             quit = 1;
+    //         }
+    //     }
 
-    // Destroy window
-    SDL_DestroyWindow(window);
+    //     // Clear screen
+    //     SDL_RenderClear(renderer);
 
-    // Quit SDL subsystems
-    SDL_Quit();
+    //     // Render texture to screen
+    //     SDL_RenderCopy(renderer, texture, NULL, NULL);
+
+    //     // Update screen
+    //     SDL_RenderPresent(renderer);
+    // }
+
+    // // Free resources and close SDL
+    // SDL_DestroyTexture(texture);
+    // SDL_DestroyRenderer(renderer);
+    // SDL_DestroyWindow(window);
+    // IMG_Quit();
+    // SDL_Quit();
+
+    application->run();
+
+    application->cleanup();
+    delete application;
+    application = nullptr;
 
     return 0;
+}
+
+
+void cleanup_wrapper() {
+    if (application) {
+        application->cleanup();
+        delete application;
+        application = nullptr;
+    }
 }
