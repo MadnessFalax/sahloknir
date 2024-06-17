@@ -30,6 +30,8 @@ public:
         if (frame_time < min_frametime) {
             SDL_Delay(min_frametime - frame_time);
         }
+
+        frame_time = SDL_GetTicks() - frame_start;
         
         if (SDL_GetTicks() - fps_timer >= 1000) {
             double fps = 1000 / (frame_time + 0.001);

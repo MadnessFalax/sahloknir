@@ -9,6 +9,7 @@
 #include "Resources.hpp"
 #include "Drawable.hpp"
 #include "Benchmark.cpp"
+#include "Text.hpp"
 
 class App {
     bool should_quit = false;
@@ -17,6 +18,7 @@ class App {
     Resources* resources = nullptr;
     Benchmark* benchmark = nullptr;
     int avg_fps = 1;
+    TTF_Font* font = nullptr;
 
 public:
     App() {
@@ -36,6 +38,11 @@ private:
 
         if(!(IMG_Init(formate_flags) & formate_flags)) {
             std::cout << "Unable to initialize SDL_image." << std::endl;
+            return false;
+        }
+
+        if (TTF_Init() == -1) {
+            std::cout << "SDL_ttf could not initialize! TTF_Error: " << TTF_GetError() << std::endl;
             return false;
         }
 
@@ -66,9 +73,6 @@ public:
             return;
         }
 
-        unsigned int frame_start;
-        unsigned int frame_time;
-
         while (!should_quit) {
             benchmark->start();
 
@@ -95,6 +99,7 @@ public:
             delete window;
         }
 
+        TTF_Quit();
         IMG_Quit();
         SDL_Quit();
     }
@@ -117,6 +122,7 @@ private:
 
     void draw() {
         clear_screen();
+        draw_grid();
 
         auto tmp = new Drawable({0, 0}, {40, 40}, resources->texture_dictionary["blue.png"]);
         tmp->draw(renderer);
@@ -124,7 +130,6 @@ private:
         tmp = nullptr;
         
         draw_info();
-        draw_grid();
         SDL_RenderPresent(renderer->renderer);
     }
 
@@ -145,11 +150,14 @@ private:
     }
 
     void draw_info() {
-        void draw_fps();
+        draw_fps();
     }
 
     void draw_fps() {
-
+        Text* t = new Text(resources->font_dictionary["Consolas.ttf"], std::to_string(avg_fps), {255, 0, 0, 255});
+        t->draw({0, 0});
+        delete t;
+        t = nullptr;
     }
 
     void clear_screen() {

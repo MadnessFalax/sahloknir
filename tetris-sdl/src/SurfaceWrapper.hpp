@@ -14,6 +14,10 @@ public:
         surface = IMG_Load(path.c_str());
     }
 
+    SurfaceWrapper(SDL_Surface* surf) {
+        surface = surf;
+    }
+
     ~SurfaceWrapper() {
         SDL_FreeSurface(surface);
         surface = nullptr;

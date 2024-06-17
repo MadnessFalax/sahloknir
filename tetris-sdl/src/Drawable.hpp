@@ -1,17 +1,8 @@
 #include "include/SDL2/SDL.h"
 #include "TextureWrapper.hpp"
+#include "vector.hpp"
 
 #include <vector>
-
-struct vector2 {
-    int x;
-    int y;
-
-    vector2(int _x, int _y) {
-        x = _x;
-        y = _y;
-    }
-};
 
 class Drawable {
 protected:
@@ -35,6 +26,8 @@ public:
             texture = tex;
             _has_texture = true;
         }
+
+        recount_dimensions();
     }
 
     Drawable(TextureWrapper* w_texture) {
